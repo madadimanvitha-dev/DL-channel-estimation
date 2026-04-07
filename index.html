@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[Your Name] — ML Engineer & Researcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0c0f;
+    --surface: #11141a;
+    --border: rgba(255,255,255,0.07);
+    --accent: #00e5a0;
+    --accent2: #0099ff;
+    --text: #eeeae4;
+    --muted: #7a8090;
+    --card: #141820;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,160,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,160,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(16px);
+    background: rgba(10,12,15,0.8);
+  }
+  nav .inner {
+    max-width: 900px; margin: 0 auto; padding: 0 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+    height: 56px;
+  }
+  .nav-logo { font-size: 15px; font-weight: 700; letter-spacing: 0.08em; color: var(--accent); }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+
+  /* HERO */
+  .hero {
+    padding: 160px 0 100px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem;
+    align-items: center;
+  }
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--accent);
+    display: inline-block;
+  }
+  .hero h1 {
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.2rem;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero-sub {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 480px;
+    margin-bottom: 2rem;
+  }
+  .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn {
+    padding: 10px 22px;
+    border-radius: 6px;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0c0f;
+    border: none;
+  }
+  .btn-primary:hover { background: #00ffb3; transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.04); }
+
+  .hero-visual {
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(0,229,160,0.15), rgba(0,153,255,0.1));
+    border: 1px solid rgba(0,229,160,0.2);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .hero-visual::after {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 1px dashed rgba(0,229,160,0.15);
+    animation: spin 20s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .hero-initials {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+
+  /* STATS */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 6rem;
+  }
+  .stat {
+    background: var(--surface);
+    padding: 1.5rem;
+    text-align: center;
+  }
+  .stat-val { font-size: 2rem; font-weight: 800; color: var(--accent); letter-spacing: -0.02em; }
+  .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; letter-spacing: 0.04em; }
+
+  /* SECTION */
+  section { margin-bottom: 6rem; }
+  .section-header {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+  .section-title { font-size: 1.4rem; font-weight: 700; }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* PROJECT CARD */
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+  .project-card:hover { border-color: rgba(0,229,160,0.25); transform: translateY(-2px); }
+  .project-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; gap: 1rem; }
+  .project-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
+  .project-subtitle {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+  }
+  .project-link {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: var(--muted);
+    text-decoration: none;
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    border-radius: 6px;
+    white-space: nowrap;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .project-link:hover { border-color: var(--accent); color: var(--accent); }
+  .project-desc { font-size: 14px; color: var(--muted); line-height: 1.75; margin-bottom: 1.2rem; }
+  .project-bullets { list-style: none; margin-bottom: 1.5rem; }
+  .project-bullets li {
+    font-size: 13px;
+    color: var(--muted);
+    padding: 5px 0 5px 1.4rem;
+    position: relative;
+    line-height: 1.6;
+  }
+  .project-bullets li::before {
+    content: '→';
+    position: absolute; left: 0;
+    color: var(--accent);
+    font-size: 12px;
+  }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+  }
+  .tag-green { background: rgba(0,229,160,0.08); color: var(--accent); border: 1px solid rgba(0,229,160,0.15); }
+  .tag-blue { background: rgba(0,153,255,0.08); color: #4db8ff; border: 1px solid rgba(0,153,255,0.15); }
+  .tag-gray { background: rgba(255,255,255,0.04); color: var(--muted); border: 1px solid var(--border); }
+
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .skill-group {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.2rem 1.4rem;
+  }
+  .skill-group-title { font-size: 12px; color: var(--accent); letter-spacing: 0.08em; margin-bottom: 10px; font-family: 'DM Mono', monospace; }
+  .skill-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-pill {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.04);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  /* CONTACT */
+  .contact-card {
+    background: var(--card);
+    border: 1px solid rgba(0,229,160,0.15);
+    border-radius: 12px;
+    padding: 2.5rem;
+    text-align: center;
+  }
+  .contact-card h3 { font-size: 1.6rem; font-weight: 800; margin-bottom: 0.6rem; }
+  .contact-card p { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 1.8rem; max-width: 420px; margin-left: auto; margin-right: auto; }
+  .contact-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 0;
+    text-align: center;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* FADE IN */
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 640px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .stats { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <div class="nav-logo">YN.dev</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero fade-in" id="about">
+    <div>
+      <div class="hero-tag">ML Engineer & Researcher</div>
+      <h1>Building smarter<br>wireless systems<br>with <span>deep learning</span></h1>
+      <p class="hero-sub">
+        I design neural networks that replace traditional signal processing pipelines —
+        channel estimation, noise reduction, and BER optimization for next-gen wireless communication.
+      </p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn btn-primary">View Projects →</a>
+        <a href="https://github.com/yourusername" class="btn btn-ghost">GitHub</a>
+        <a href="https://linkedin.com/in/yourprofile" class="btn btn-ghost">LinkedIn</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-initials">YN</div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats fade-in">
+    <div class="stat">
+      <div class="stat-val">↓MSE</div>
+      <div class="stat-label">vs. Traditional Methods</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">↑BER</div>
+      <div class="stat-label">Performance in Noise</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">0</div>
+      <div class="stat-label">Pilot Signals Needed</div>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-header fade-in">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Featured Projects</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="project-card fade-in">
+      <div class="project-top">
+        <div>
+          <div class="project-subtitle">DEEP LEARNING · WIRELESS COMMS</div>
+          <div class="project-title">Pilotless Channel Estimation for Chaotic Wireless Communication</div>
+        </div>
+        <a href="https://github.com/yourusername/DL-channel-estimation" class="project-link">
+          ↗ GitHub
+        </a>
+      </div>
+      <p class="project-desc">
+        A deep neural network that estimates wireless channel parameters without pilot signals —
+        recovering channel state from autocorrelation patterns of received signals in highly noisy,
+        chaotic environments.
+      </p>
+      <ul class="project-bullets">
+        <li>Designed a fully pilotless estimation architecture, eliminating overhead bandwidth waste</li>
+        <li>Pre-trained the model using a Stacked Denoising Autoencoder (SDAE) to learn noise-robust representations from signal autocorrelation</li>
+        <li>Achieved measurable reduction in MSE and improved BER compared to traditional LS and pilot-based baselines</li>
+        <li>Implemented end-to-end pipeline in both MATLAB (simulation) and TensorFlow (model training)</li>
+      </ul>
+      <div class="tags">
+        <span class="tag tag-green">TensorFlow</span>
+        <span class="tag tag-green">SDAE</span>
+        <span class="tag tag-blue">MATLAB</span>
+        <span class="tag tag-blue">Deep Learning</span>
+        <span class="tag tag-gray">Channel Estimation</span>
+        <span class="tag tag-gray">BER / MSE</span>
+        <span class="tag tag-gray">Signal Processing</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-header fade-in">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Skills & Tools</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid fade-in">
+      <div class="skill-group">
+        <div class="skill-group-title">FRAMEWORKS</div>
+        <div class="skill-list">
+          <span class="skill-pill">TensorFlow</span>
+          <span class="skill-pill">Keras</span>
+          <span class="skill-pill">NumPy</span>
+          <span class="skill-pill">SciPy</span>
+          <span class="skill-pill">Matplotlib</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">LANGUAGES</div>
+        <div class="skill-list">
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">MATLAB</span>
+          <span class="skill-pill">C (basics)</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">DOMAINS</div>
+        <div class="skill-list">
+          <span class="skill-pill">Channel Estimation</span>
+          <span class="skill-pill">Signal Processing</span>
+          <span class="skill-pill">Wireless Comms</span>
+          <span class="skill-pill">Autoencoders</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">CONCEPTS</div>
+        <div class="skill-list">
+          <span class="skill-pill">Deep Neural Nets</span>
+          <span class="skill-pill">BER Optimization</span>
+          <span class="skill-pill">MSE Minimization</span>
+          <span class="skill-pill">SDAE Pre-training</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-header fade-in">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Get In Touch</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="contact-card fade-in">
+      <h3>Let's collaborate</h3>
+      <p>Open to research collaborations, ML engineering roles, and projects at the intersection of deep learning and communications engineering.</p>
+      <div class="contact-links">
+        <a href="mailto:youremail@example.com" class="btn btn-primary">Send Email →</a>
+        <a href="https://github.com/yourusername" class="btn btn-ghost">GitHub</a>
+        <a href="https://linkedin.com/in/yourprofile" class="btn btn-ghost">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="container">
+    Built by [Your Name] · Hosted on GitHub Pages
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
